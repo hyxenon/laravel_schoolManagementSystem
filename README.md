@@ -19,3 +19,4 @@ php artisan migrate
 
 Seed database
 php artisan db:seed --class=InitialUserSeeder
+
