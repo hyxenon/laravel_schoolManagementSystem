@@ -17,4 +17,6 @@ copy the env file in gc.
 Step 4:
 php artisan migrate
 
-testing pushing again
+Seed database
+php artisan db:seed --class=InitialUserSeeder
+
