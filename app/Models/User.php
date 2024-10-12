@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -33,15 +32,50 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    /**
+     * Define a one-to-one relationship with the Employee model.
+     */
+    public function employee()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasOne(Employee::class);
+    }
+
+    /**
+     * Check if the user has a registrar role.
+     *
+     * @return bool
+     */
+    public function isRegistrar()
+    {
+        return $this->employee && $this->employee->position === 'Registrar';
+    }
+
+    /**
+     * Check if the user has a teacher role.
+     *
+     * @return bool
+     */
+    public function isTeacher()
+    {
+        return $this->employee && $this->employee->position === 'Teacher';
+    }
+
+    /**
+     * Check if the user is a student (no employee record).
+     *
+     * @return bool
+     */
+    public function isStudent()
+    {
+        return !$this->employee;
     }
 }
