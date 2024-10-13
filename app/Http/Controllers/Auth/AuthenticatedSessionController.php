@@ -25,11 +25,11 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-    
+
         $request->session()->regenerate();
         /** @var \App\Models\User $user */
         $user = Auth::user();
-    
+
         // Role-based redirection
         if ($user->isRegistrar()) {
             return redirect()->route('registrar');
@@ -37,8 +37,12 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('teacher');
         } elseif ($user->isStudent()) {
             return redirect()->route('student');
+        } elseif ($user->isTreasury()) {
+            return redirect()->route('treasury');
+        } elseif ($user->isProfHead()) {
+            return redirect()->route('program_head');
         }
-    
+
         // Default redirection to dashboard if no specific role is matched
         return redirect()->route('dashboard');
     }

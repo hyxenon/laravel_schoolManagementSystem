@@ -56,7 +56,7 @@ class User extends Authenticatable
      */
     public function isRegistrar()
     {
-        return $this->employee && $this->employee->position === 'Registrar';
+        return $this->employee && $this->employee->position === 'registrar';
     }
 
     /**
@@ -66,8 +66,29 @@ class User extends Authenticatable
      */
     public function isTeacher()
     {
-        return $this->employee && $this->employee->position === 'Teacher';
+        return $this->employee && $this->employee->position === 'teacher';
     }
+
+    /**
+     * Check if the user has a Program Head role.
+     *
+     * @return bool
+     */
+    public function isProfHead()
+    {
+        return $this->employee && $this->employee->position === 'program_head';
+    }
+
+    /**
+     * Check if the user has a Treasury role.
+     *
+     * @return bool
+     */
+    public function isTreasury()
+    {
+        return $this->employee && $this->employee->position === 'treasury';
+    }
+
 
     /**
      * Check if the user is a student (no employee record).

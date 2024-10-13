@@ -29,7 +29,7 @@ class InitialUserSeeder extends Seeder
             'department_id' => $engineeringDepartment->id,
         ]);
 
-        // Create a User (generic role)
+        // Create a User (Student role)
         $user = User::create([
             'name' => 'Justine Edward P. Santos',
             'email' => 'justinesantos@gmail.com',
@@ -46,7 +46,7 @@ class InitialUserSeeder extends Seeder
         Employee::create([
             'user_id' => $teacherUser->id,
             'department_id' => $engineeringDepartment->id,
-            'position' => 'reacher',
+            'position' => 'teacher',
             'category' => 'faculty',
             'salary' => 45000.00, // Example salary
         ]);
@@ -64,6 +64,40 @@ class InitialUserSeeder extends Seeder
             'position' => 'registrar',
             'category' => 'staff',
             'salary' => 50000.00, // Example salary
+        ]);
+
+        // Create a Program Head and Employee
+        $programHeadUser = User::create([
+            'name' => 'Jose Reyes',
+            'email' => 'cecthead@gmail.com',
+            'password' => Hash::make('testing123')
+        ]);
+
+        $programHeadEmployee = Employee::create([
+            'user_id' => $programHeadUser->id,
+            'department_id' => $engineeringDepartment->id,
+            'position' => 'program_head',
+            'category' => 'faculty',
+            'salary' => 60000,
+        ]);
+
+        $engineeringDepartment->update([
+            'head_of_department_id' => $programHeadEmployee->id
+        ]);
+
+        // Create a Treasury User
+        $treasuryUser = User::create([
+            'name' => 'Treasury First',
+            'email' => 'treasury1@gmail.com',
+            'password' => Hash::make('testing123')
+        ]);
+
+        Employee::create([
+            'user_id' => $treasuryUser->id,
+            'department_id' => null,
+            'position' => 'treasury',
+            'category' => 'staff',
+            'salary' => 50000
         ]);
     }
 }
