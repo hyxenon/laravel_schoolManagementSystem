@@ -4,7 +4,7 @@
         auth()->user()->isTeacher() => 'professor-layout',
         auth()->user()->isProfHead() => 'profHead-layout',
         auth()->user()->isTreasury() => 'treasury-layout',
-        default => 'default-layout',
+        default => 'student-layout',
     };
 @endphp
 
