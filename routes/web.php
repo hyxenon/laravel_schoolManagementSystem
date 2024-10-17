@@ -23,8 +23,8 @@ Route::get('/registrar', function () {
   ->name('registrar');
 
 
-Route::get('/registrar/employee/registrar', function () {
-  return view('registrar.employee.registrar.employee_registrar');
+Route::get('/registrar/employee', function () {
+  return view('registrar.employee.employee');
 })->middleware(['auth', CheckRole::class . ':registrar'])
   ->name('registrar.employee.registrar');
 

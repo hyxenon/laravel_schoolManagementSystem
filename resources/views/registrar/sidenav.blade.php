@@ -54,7 +54,7 @@ dark:bg-neutral-800 dark:border-neutral-700" role="dialog" tabindex="-1" aria-la
               <path d="m14.3 16.6 1-.4" />
               <path d="m20.7 13.8 1-.4" />
             </svg>
-            Registrar
+            Employee
           </a>
         </li>
 

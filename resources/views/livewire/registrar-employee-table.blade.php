@@ -1,5 +1,8 @@
 <div>
-
+    <h1 class="mb-8 text-3xl font-bold text-gray-600">
+        Employees {{ $selectedPosition === 'All' ? '' : ucwords(str_replace('_', ' ', $selectedPosition)) }}
+    </h1>
+    
     <select wire:change="filterByPosition($event.target.value)" class="max-w-[200px] px-4 py-3 mb-8 text-sm border-gray-200 rounded-lg pe-9 focus:border-blue-500 focus:ring-blue-500">
         <option value="All">All</option>
         <option value="registrar">Registrar</option>
@@ -44,16 +47,16 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-100">
                 @forelse($employees as $employee)
-                    <tr class="transition duration-150 ease-in-out hover:bg-gray-50">
+                    <tr wire:key="employee-{{ $employee->id }}" class="transition duration-150 ease-in-out hover:bg-gray-50">
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">{{ $employee->id }}</td>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{{ $employee->user->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{{ ucwords($employee->user->name) ?? 'N/A' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">{{ $employee->user->email ?? 'N/A' }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-800 capitalize whitespace-nowrap">{{ $employee->position }}</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap">
-                            <button wire:ignore wire:click="edit({{ $employee->id }})" class="inline-flex items-center px-3 py-1.5 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        <td class="px-6 py-4 text-sm text-gray-800 capitalize whitespace-nowrap">{{ucwords(str_replace('_', ' ', $employee->position)) }}</td>
+                        <td  class="px-6 py-4 text-center whitespace-nowrap">
+                            <button wire:click="edit({{ $employee->id }})" class="inline-flex items-center px-3 py-1.5 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
                                 Edit
                             </button>
-                            <button wire:ignore wire:click="confirmDelete({{ $employee->id }})" class="inline-flex items-center px-3 py-1.5 ml-2 text-sm font-semibold text-red-600 bg-red-100 rounded-full hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-300">
+                            <button wire:click="confirmDelete({{ $employee->id }})" class="inline-flex items-center px-3 py-1.5 ml-2 text-sm font-semibold text-red-600 bg-red-100 rounded-full hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-300">
                                 Delete
                             </button>
                         </td>
@@ -68,6 +71,8 @@
     </div>
 
     
+
+
 
     <div class="mt-4 text-center">
         {{ $employees->links() }}
@@ -112,39 +117,45 @@
     <label for="position" class="mb-1 text-sm font-medium text-gray-600">Position</label>
     <select wire:model="position" id="position" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         <option value="">Select Position</option>
-        @if($isEdit)
-            <!-- Show all options if editing -->
+        
+        @if($selectedPosition === "All")
+            <!-- Show all options if "All" is selected -->
             <option value="registrar">Registrar</option>
             <option value="teacher">Teacher</option>
             <option value="program_head">Program Head</option>
             <option value="treasury">Treasury</option>
-        @else
-            <!-- Show only Registrar option if adding -->
+        @elseif($selectedPosition === "registrar")
             <option value="registrar">Registrar</option>
+        @elseif($selectedPosition === "teacher")
+            <option value="teacher">Teacher</option>
+        @elseif($selectedPosition === "program_head")
+            <option value="program_head">Program Head</option>
+        @elseif($selectedPosition === "treasury")
+            <option value="treasury">Treasury</option>
         @endif
     </select>
     @error('position') <span class="mt-1 text-xs text-red-500">{{ $message }}</span> @enderror
 </div>
 
 
-                <!-- Password and Confirmation Fields (only for Add User) -->
-                @unless($isEdit)
-                <div class="flex flex-col" wire:ignore>
-                    <label for="password" class="mb-1 text-sm font-medium text-gray-600">Password</label>
-                    <div class="flex items-center">
-                        <input type="password" wire:model="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password">
 
-                       
-                    </div>
-                    @error('password') <span class="mt-1 text-xs text-red-500">{{ $message }}</span> @enderror
-                </div>
+<!-- Password and Confirmation Fields (only for Add User) -->
+@unless($isEdit)
+    <div class="flex flex-col">
+        <label for="password" class="mb-1 text-sm font-medium text-gray-600">Password</label>
+        <div class="flex items-center">
+            <input type="password" wire:model.defer="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password">
+        </div>
+        @error('password') <span class="mt-1 text-xs text-red-500">{{ $message }}</span> @enderror
+    </div>
 
-                <div class="flex flex-col">
-                    <label for="password_confirmation" class="mb-1 text-sm font-medium text-gray-600">Confirm Password</label>
-                    <input type="password" wire:model="password_confirmation" id="password_confirmation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Confirm Password">
-                    @error('password_confirmation') <span class="mt-1 text-xs text-red-500">{{ $message }}</span> @enderror
-                </div>
-                @endunless
+    <div class="flex flex-col">
+        <label for="password_confirmation" class="mb-1 text-sm font-medium text-gray-600">Confirm Password</label>
+        <input type="password" wire:model.defer="password_confirmation" id="password_confirmation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Confirm Password">
+        @error('password_confirmation') <span class="mt-1 text-xs text-red-500">{{ $message }}</span> @enderror
+    </div>
+@endunless
+
 
                 <!-- Modal Footer -->
                 <div class="flex justify-end space-x-3">
