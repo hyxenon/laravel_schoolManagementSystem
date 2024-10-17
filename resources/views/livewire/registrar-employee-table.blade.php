@@ -1,4 +1,16 @@
-<div class="p-6 overflow-auto bg-white rounded-lg shadow">
+<div>
+
+    <select wire:change="filterByPosition($event.target.value)" class="max-w-[200px] px-4 py-3 mb-8 text-sm border-gray-200 rounded-lg pe-9 focus:border-blue-500 focus:ring-blue-500">
+        <option value="All">All</option>
+        <option value="registrar">Registrar</option>
+        <option value="treasury">Treasury</option>
+        <option value="teacher">Professor</option>
+        <option value="program_head">Program Head</option>
+    </select>
+    
+    
+
+      <div class="p-6 bg-white rounded-lg shadow">
         <!-- Flash Message -->
         @if(session()->has('message'))
         <div class="p-4 mb-4 text-green-800 bg-green-100 rounded">
@@ -10,7 +22,7 @@
         class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Search...">
                 <!-- Add User Button -->
-                <button wire:click="openAddUserModal" class="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">
+                <button wire:click="openAddUserModal" class="px-6 py-2 text-white bg-[#4741A6] rounded-lg ">
                     + Add User
                 </button>
 
@@ -19,41 +31,41 @@
 
 
     <!-- Employees Table -->
-    <table class="w-full border-collapse">
-        <thead class="text-white bg-indigo-700">
-            <tr>
-                <th class="px-4 py-3 text-left">ID</th>
-                <th class="px-4 py-3 text-left">Name</th>
-                <th class="px-4 py-3 text-left">Email</th>
-                <th class="px-4 py-3 text-left">Position</th>
-                <th class="px-4 py-3 text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($employees as $employee)
-                <tr class="transition duration-150 ease-in-out hover:bg-gray-200">
-                    <td class="px-4 py-3 border-b border-gray-200">{{ $employee->id }}</td>
-                    <td class="px-4 py-3 border-b border-gray-200">{{ $employee->user->name ?? 'N/A' }}</td>
-                    <td class="px-4 py-3 border-b border-gray-200">{{ $employee->user->email ?? 'N/A' }}</td>
-                    <td class="px-4 py-3 capitalize border-b border-gray-200">{{ $employee->position }}</td>
-                    <td class="px-4 py-3 text-center border-b border-gray-200">
-                        <button wire:ignore wire:click="edit({{ $employee->id }})" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232a3 3 0 010 4.243L7.5 17.207l-4.5 1.5 1.5-4.5 7.732-7.732a3 3 0 014.242 0z"></path></svg>
-                            Edit
-                        </button>
-                        <button wire:ignore wire:click="confirmDelete({{ $employee->id }})" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.136 21H7.864a2 2 0 01-1.997-1.858L5 7m5 4v6m4-6v6M1 7h22"></path></svg>
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            @empty
+    <div class="my-8 overflow-auto border border-gray-200 rounded-lg shadow-lg">
+        <table class="w-full bg-white divide-y divide-gray-200">
+            <thead class="bg-[#9BBBFC]">
                 <tr>
-                    <td colspan="5" class="px-4 py-3 text-center border-b border-gray-200">No employees found.</td>
+                    <th class="px-6 py-3 text-xs font-semibold tracking-wider text-left ">ID</th>
+                    <th class="px-6 py-3 text-xs font-semibold tracking-wider text-left ">Name</th>
+                    <th class="px-6 py-3 text-xs font-semibold tracking-wider text-left ">Email</th>
+                    <th class="px-6 py-3 text-xs font-semibold tracking-wider text-left ">Position</th>
+                    <th class="px-6 py-3 text-xs font-semibold tracking-wider text-center">Actions</th>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-100">
+                @forelse($employees as $employee)
+                    <tr class="transition duration-150 ease-in-out hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">{{ $employee->id }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{{ $employee->user->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">{{ $employee->user->email ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800 capitalize whitespace-nowrap">{{ $employee->position }}</td>
+                        <td class="px-6 py-4 text-center whitespace-nowrap">
+                            <button wire:ignore wire:click="edit({{ $employee->id }})" class="inline-flex items-center px-3 py-1.5 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                                Edit
+                            </button>
+                            <button wire:ignore wire:click="confirmDelete({{ $employee->id }})" class="inline-flex items-center px-3 py-1.5 ml-2 text-sm font-semibold text-red-600 bg-red-100 rounded-full hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-300">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No employees found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
     
 
@@ -106,7 +118,6 @@
             <option value="teacher">Teacher</option>
             <option value="program_head">Program Head</option>
             <option value="treasury">Treasury</option>
-            <option value="student">Student</option>
         @else
             <!-- Show only Registrar option if adding -->
             <option value="registrar">Registrar</option>
@@ -176,10 +187,8 @@
     </div>
 </div>
 @endif
-
-
-
-
-
-    
 </div>
+</div>
+
+
+
