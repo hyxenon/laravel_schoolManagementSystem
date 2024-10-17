@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
 
-// Route::get('/dashboard', function () {
-//   return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+  return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,6 +21,12 @@ Route::get('/registrar', function () {
   return view('registrar.dashboard');
 })->middleware(['auth', CheckRole::class . ':registrar'])
   ->name('registrar');
+
+
+Route::get('/registrar/employee/registrar', function () {
+  return view('registrar.employee.registrar.employee_registrar');
+})->middleware(['auth', CheckRole::class . ':registrar'])
+  ->name('registrar.employee.registrar');
 
 // Teacher page, accessible only to teachers
 Route::get('/teacher', function () {
