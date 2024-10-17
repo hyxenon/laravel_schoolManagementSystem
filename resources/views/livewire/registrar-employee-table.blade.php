@@ -53,6 +53,10 @@
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">{{ $employee->user->email ?? 'N/A' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-800 capitalize whitespace-nowrap">{{ucwords(str_replace('_', ' ', $employee->position)) }}</td>
                         <td  class="px-6 py-4 text-center whitespace-nowrap">
+
+                            <a href="{{ route('employee.show', $employee->id) }}" class="inline-flex items-center px-3 py-1.5 text-sm font-semibold text-green-600 bg-green-100 rounded-full hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-300">
+                                View
+                            </a>
                             <button wire:click="edit({{ $employee->id }})" class="inline-flex items-center px-3 py-1.5 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
                                 Edit
                             </button>
@@ -69,11 +73,6 @@
             </tbody>
         </table>
     </div>
-
-    
-
-
-
     <div class="mt-4 text-center">
         {{ $employees->links() }}
     </div>
