@@ -2,7 +2,8 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Str;
+
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Employee;
@@ -22,6 +23,9 @@ class RegistrarEmployeeTable extends Component
     public $showDeleteModal = false;
     public $employeeToDelete;
     public $employeeName;
+
+    public $selectedPosition = 'All';
+
 
     public function openAddUserModal()
     {
@@ -86,9 +90,15 @@ class RegistrarEmployeeTable extends Component
 
     public function update()
     {
+        $employee = Employee::findOrFail($this->employeeId);
         $this->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $this->employeeId,
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($employee->user_id), // Use user_id here instead of employeeId
+            ],
             'position' => 'required|string|max:255',
         ]);
 
@@ -101,6 +111,7 @@ class RegistrarEmployeeTable extends Component
         $this->showModal = false;
         session()->flash('message', 'Employee updated successfully.');
     }
+
 
     public function closeModal()
     {
@@ -136,19 +147,28 @@ class RegistrarEmployeeTable extends Component
         session()->flash('message', 'Employee deleted successfully.');
     }
 
+    public function filterByPosition($position)
+    {
+        $this->selectedPosition = $position;
+        $this->resetPage(); // Optional: resets pagination to page 1 when filtering
+    }
+
 
     public function render()
     {
         $employees = Employee::with('user')
-            ->where('position', 'registrar')
             ->whereHas('user', function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('email', 'like', '%' . $this->search . '%');
-            })
-            ->paginate(10);
+            });
+
+        // Apply position filter if not "All"
+        if ($this->selectedPosition !== 'All') {
+            $employees->where('position', $this->selectedPosition);
+        }
 
         return view('livewire.registrar-employee-table', [
-            'employees' => $employees,
+            'employees' => $employees->paginate(10),
         ]);
     }
 }

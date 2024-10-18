@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
+use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
@@ -23,10 +25,14 @@ Route::get('/registrar', function () {
   ->name('registrar');
 
 
-Route::get('/registrar/employee/registrar', function () {
-  return view('registrar.employee.registrar.employee_registrar');
+Route::get('/registrar/employee', function () {
+  return view('registrar.employee.employee');
 })->middleware(['auth', CheckRole::class . ':registrar'])
   ->name('registrar.employee.registrar');
+
+
+Route::get('/registrar/employees/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+
 
 // Teacher page, accessible only to teachers
 Route::get('/teacher', function () {
