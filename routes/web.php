@@ -32,7 +32,7 @@ Route::get('/registrar/employee', function () {
 })->middleware(['auth', CheckRole::class . ':registrar'])
   ->name('registrar.employee.registrar');
 
-Route::get('/registrar/employees/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+//Route::get('/registrar/employees/{id}', [EmployeeController::class, 'show'])->name('employee.show');
 
 // Colleges
 Route::get('/registrar/colleges', function () {
