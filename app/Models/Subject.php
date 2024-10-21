@@ -12,7 +12,8 @@ class Subject extends Model
     // Define the fillable fields for mass assignment
     protected $fillable = [
         'name',
-        'course_id',
+        'code',
+        'course_id', // Optional for general subjects, nullable
         'credits',
         'description',
     ];
@@ -22,10 +23,11 @@ class Subject extends Model
     /**
      * Get the course that the subject belongs to.
      */
-    public function course()
+    public function courses()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsToMany(Course::class, 'course_subject');
     }
+
 
     /**
      * Get all grades for the subject.

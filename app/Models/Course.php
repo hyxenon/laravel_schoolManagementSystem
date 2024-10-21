@@ -39,8 +39,9 @@ class Course extends Model
      */
     public function subjects()
     {
-        return $this->hasMany(Subject::class);
+        return $this->belongsToMany(Subject::class, 'course_subject');
     }
+
 
     /**
      * Get all teachers assigned to this course.

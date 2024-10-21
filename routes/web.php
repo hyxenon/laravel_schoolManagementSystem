@@ -40,6 +40,13 @@ Route::get('/registrar/colleges', function () {
   ->name('registrar.colleges');
 
 
+// Subjects
+Route::get('/registrar/subjects', function () {
+  return view('registrar.subjects.subjects');
+})->middleware(['auth', CheckRole::class . ':registrar'])
+  ->name('registrar.subjects');
+
+
 // Teacher page, accessible only to teachers
 Route::get('/teacher', function () {
   return view('professor.dashboard');
