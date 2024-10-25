@@ -23,10 +23,11 @@ class Subject extends Model
     /**
      * Get the course that the subject belongs to.
      */
-    public function courses()
+    public function course()
     {
-        return $this->belongsToMany(Course::class, 'course_subject');
+        return $this->belongsTo(Course::class);
     }
+
 
 
     /**
