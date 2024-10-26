@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Course;
 use App\Models\Department;
+use App\Models\Employee;
 use Livewire\Component;
 
 class Departments extends Component
@@ -27,7 +28,7 @@ class Departments extends Component
         return view('livewire.departments');
     }
 
-    // Department methods
+
     public function openAddDepartmentModal()
     {
         $this->resetInputFields();
@@ -40,7 +41,9 @@ class Departments extends Component
         $this->validate([
             'departmentName' => 'required',
             'departmentDescription' => 'required',
-            'programHeadId' => 'nullable|integer',
+            'programHeadId' => 'nullable|integer|exists:employees,id',
+        ], [
+            'programHeadId.exists' => 'The Program Head ID does not exist in the employees database.'
         ]);
 
         Department::create([
@@ -49,10 +52,17 @@ class Departments extends Component
             'head_of_department_id' => $this->programHeadId,
         ]);
 
+
+        if ($this->programHeadId) {
+            Employee::where('id', $this->programHeadId)->update(['position' => 'program_head']);
+        }
+
         $this->resetInputFields();
         $this->showModal = false;
         session()->flash('message', 'Department added successfully.');
     }
+
+
 
     public function editDepartment($id)
     {
@@ -72,24 +82,51 @@ class Departments extends Component
         $this->validate([
             'departmentName' => 'required',
             'departmentDescription' => 'required',
-            'programHeadId' => 'nullable|integer',
+            'programHeadId' => [
+                'nullable',
+                'integer',
+                'exists:employees,id', // This ensures the programHeadId exists in the employees table
+            ],
         ]);
 
+
         $department = Department::findOrFail($this->departmentId);
+
+
+        if ($department->head_of_department_id && $department->head_of_department_id != $this->programHeadId) {
+
+            $oldHead = Employee::find($department->head_of_department_id);
+            if ($oldHead) {
+                $oldHead->update(['position' => 'teacher']);
+            }
+        }
+
+
         $department->update([
             'name' => $this->departmentName,
             'description' => $this->departmentDescription,
             'head_of_department_id' => $this->programHeadId,
         ]);
 
+
+        if ($this->programHeadId) {
+            $newHead = Employee::find($this->programHeadId);
+            if ($newHead) {
+                $newHead->update(['position' => 'program_head']);
+            }
+        }
+
         $this->resetInputFields();
         $this->showModal = false;
         session()->flash('message', 'Department updated successfully.');
     }
 
+
+
+
     public function confirmDelete()
     {
-        // Get department information for confirmation
+
         $department = Department::findOrFail($this->departmentId);
         $this->departmentIdToDelete = $department->id;
         $this->departmentName = $department->name;
