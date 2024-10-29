@@ -65,6 +65,11 @@ Route::get('/program_head', function () {
 })->middleware(['auth', CheckRole::class . ':program_head'])
   ->name('program_head');
 
+Route::get('/program_head/room', function () {
+  return view('program_head.room.room');
+})->middleware(['auth', CheckRole::class . ':program_head'])
+  ->name('program_head.room');
+
 // Treasury page, accessible only to Treasury
 Route::get('/treasury', function () {
   return view('treasury.dashboard');
