@@ -49,7 +49,7 @@ class GradeController extends Controller
         return view('professor.grade.g-student', compact('students', 'schedule'));
     }
 
-    public function showStudentGrades($studentId, $subjectId)
+    /*public function showStudentGrades($studentId, $subjectId)
     {
         // Retrieve the schedule based on the subject ID
         $schedule = Schedule::with(['subject.assignments.submissions'])
@@ -73,7 +73,7 @@ class GradeController extends Controller
     }
 
 
-    /*public function showStudentGrades($studentId, $subjectId)
+    public function showStudentGrades($studentId, $subjectId)
     {
         // Retrieve the schedule and assignments
         $schedule = Schedule::with(['subject.assignments.submissions'])
@@ -108,7 +108,63 @@ class GradeController extends Controller
         return view('professor.grade.grade', compact('student', 'gradesByType', 'schedule'));
     }*/
     
+    public function showStudentGrades($subjectId, $studentId)
+    {
+        // Retrieve the schedule based on the subject ID
+        $schedule = Schedule::with(['subject.assignments.submissions'])
+            ->where('subject_id', $subjectId)
+            ->first();
 
+        if (!$schedule) {
+            return redirect()->back()->with('error', 'Schedule not found.');
+        }
+
+        // Get the student based on the student ID
+        $student = Student::with('user')->find($studentId); // Ensure the user relationship is loaded
+        if (!$student) {
+            return redirect()->back()->with('error', 'Student not found.');
+        }
+
+        // Fetch grades for prelim, midterm, and final
+        $prelimGrades = Grade::where('student_id', $studentId)
+                            ->where('subject_id', $subjectId)
+                            ->where('term', 'prelim')
+                            ->with('assignment') // Ensure assignment is loaded
+                            ->get();
+
+        $midtermGrades = Grade::where('student_id', $studentId)
+                            ->where('subject_id', $subjectId)
+                            ->where('term', 'midterm')
+                            ->with('assignment') // Ensure assignment is loaded
+                            ->get();
+
+        $finalGrades = Grade::where('student_id', $studentId)
+                            ->where('subject_id', $subjectId)
+                            ->where('term', 'final')
+                            ->with('assignment') // Ensure assignment is loaded
+                            ->get();
+
+        // Pass the student and grades to the view
+        return view('professor.grade.grade', compact('student', 'prelimGrades', 'midtermGrades', 'finalGrades'));
+    }
+
+
+    public function storeGrade(Request $request) {
+        $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'subject_id' => 'required|exists:subjects,id',
+            'grade_value' => 'required|numeric',
+            'term' => 'required|string',
+        ]);
+    
+        Grade::create($request->all());
+        
+        return redirect()->back()->with('success', 'Grade recorded successfully!');
+    }
+
+
+
+    
 
 
     private function calculateSemesterGrade($studentId, $subjectId)
