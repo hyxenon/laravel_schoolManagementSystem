@@ -11,7 +11,7 @@ class Schedule extends Model
 
     // Define the fillable fields for mass assignment
     protected $fillable = [
-        'course_id',
+        'subject_id',
         'room_id',
         'employee_id',
         'day_of_week',
@@ -52,4 +52,9 @@ class Schedule extends Model
     {
         return $this->belongsToMany(Student::class, 'schedule_student');
     }
+
+    public function subject()
+{
+    return $this->belongsTo(Subject::class, 'subject_id');
+}
 }

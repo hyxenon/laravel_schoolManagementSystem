@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->foreignId('course_id')->constrained()->onDelete('cascade'); // Foreign key to Course table
+            $table->foreignId('subject_id')->constrained()->onDelete('cascade'); // Foreign key to Subject table
             $table->foreignId('room_id')->constrained()->onDelete('cascade'); // Foreign key to Room table
             $table->foreignId('employee_id')->constrained()->onDelete('cascade'); // Foreign key to Employee table (teacher)
             $table->string('day_of_week'); // Day of the week (e.g., "Monday")
