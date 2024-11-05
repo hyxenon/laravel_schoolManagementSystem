@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-32 mx-auto py-2 text-center bg-blue-800 text-white rounded hover:bg-blue-700 transition duration-300">Submit</button>
+                <button type="submit" class="w-32 mx-auto py-2 text-center bg-blue-800 text-white rounded hover:bg-blue-700 transition duration-300">SUBMIT</button>
             </div>
         </form>
     </div>
