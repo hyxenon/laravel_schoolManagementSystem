@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
-use App\Models\Student; // Ensure the Student model is imported
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
