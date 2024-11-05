@@ -42,14 +42,14 @@
                 <span class="text-gray-600">Amount:</span>
                 <span class="text-gray-600">{{ number_format($payment->amount, 2) }}</span>
             </div>
-            <div class="flex justify-between">
+            <!-- <div class="flex justify-between">
                 <span class="text-gray-600">Tax:</span>
                 <span class="text-gray-600">{{ number_format($payment->tax, 2) }}</span>
             </div>
             <div class="flex justify-between font-bold">
                 <span class="text-gray-600">Total:</span>
                 <span class="text-gray-600">{{ number_format($payment->total, 2) }}</span>
-            </div>
+            </div> -->
         </div>
 
         <hr class="my-4 border-gray-300">
