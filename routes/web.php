@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\CheckRole;
 use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
@@ -75,5 +76,10 @@ Route::get('/treasury', function () {
   return view('treasury.dashboard');
 })->middleware(['auth', CheckRole::class . ':treasury'])
   ->name('treasury');
+
+Route::get('treasury/payment', [PaymentController::class, 'showPaymentForm'])->name('treasury.payment.create');
+Route::post('treasury/payment/store', [PaymentController::class, 'store'])->name('treasury.payment.store');
+Route::get('treasury/payment/receipt/{id}', [PaymentController::class, 'showReceipt'])->name('treasury.payment.receipt');
+Route::post('/get-student-name', [PaymentController::class, 'getStudentName'])->name('get.student.name');
 
 require __DIR__ . '/auth.php';

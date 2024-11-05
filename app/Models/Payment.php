@@ -12,11 +12,14 @@ class Payment extends Model
     // Define the fillable fields for mass assignment
     protected $fillable = [
         'student_id',
+        'document_type',
+        'payment_method',
         'amount',
         'payment_date',
-        'payment_type',
+        'exam_type',
         'status',
         'remarks',
+        'operator', // Add operator here
     ];
 
     // Relationships
