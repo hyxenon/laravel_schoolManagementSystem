@@ -20,7 +20,7 @@
             @include('layouts.header')
             @include('treasury.sidenav')
             <!-- Page Content -->
-            <main class="w-full bg-gray-100 lg:ps-72">
+            <main class="w-full bg-gray-90 lg:ps-72">
                 {{ $slot }}
             </main>
         </div>

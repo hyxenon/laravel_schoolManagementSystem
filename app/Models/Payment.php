@@ -14,9 +14,11 @@ class Payment extends Model
         'student_id',
         'amount',
         'payment_date',
-        'payment_type',
+        'document_type',
+        'security_code',
+        'payment_method',
         'status',
-        'remarks',
+        'remark'
     ];
 
     // Relationships
