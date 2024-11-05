@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomController;
 use App\Http\Middleware\CheckRole;
 use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
@@ -65,10 +66,11 @@ Route::get('/program_head', function () {
 })->middleware(['auth', CheckRole::class . ':program_head'])
   ->name('program_head');
 
-Route::get('/program_head/room', function () {
-  return view('program_head.room.room');
-})->middleware(['auth', CheckRole::class . ':program_head'])
-  ->name('program_head.room');
+// Room management routes for Program Head
+Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function () {
+  Route::resource('/program_head/rooms', RoomController::class)->except(['show']);
+});
+
 
 // Treasury page, accessible only to Treasury
 Route::get('/treasury', function () {
