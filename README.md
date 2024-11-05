@@ -12,11 +12,21 @@ Step 2:
 composer install
 
 Step 3:
-copy the env file in gc.
+npm install
 
 Step 4:
+php artisan key:generate
+
+Step 5:
 php artisan migrate
 
-Seed database
+Step 6: Seed database
 php artisan db:seed --class=InitialUserSeeder
 
+Step 7: new terminal
+php artisan serve
+
+Step 8: new terminal
+npm run dev
+
+sabay na mag rurun yung php artisan serve at npm run dev wag nyo icloclose yung terminal.

@@ -1,14 +1,16 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
+use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
 
-// Route::get('/dashboard', function () {
-//   return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+  return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,6 +23,29 @@ Route::get('/registrar', function () {
   return view('registrar.dashboard');
 })->middleware(['auth', CheckRole::class . ':registrar'])
   ->name('registrar');
+
+
+// Employee
+Route::get('/registrar/employee', function () {
+  return view('registrar.employee.employee');
+})->middleware(['auth', CheckRole::class . ':registrar'])
+  ->name('registrar.employee.registrar');
+
+Route::get('/registrar/employees/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+
+// Colleges
+Route::get('/registrar/colleges', function () {
+  return view('registrar.colleges.colleges');
+})->middleware(['auth', CheckRole::class . ':registrar'])
+  ->name('registrar.colleges');
+
+
+// Subjects
+Route::get('/registrar/subjects', function () {
+  return view('registrar.subjects.subjects');
+})->middleware(['auth', CheckRole::class . ':registrar'])
+  ->name('registrar.subjects');
+
 
 // Teacher page, accessible only to teachers
 Route::get('/teacher', function () {
@@ -39,6 +64,11 @@ Route::get('/program_head', function () {
   return view('program_head.dashboard');
 })->middleware(['auth', CheckRole::class . ':program_head'])
   ->name('program_head');
+
+Route::get('/program_head/room', function () {
+  return view('program_head.room.room');
+})->middleware(['auth', CheckRole::class . ':program_head'])
+  ->name('program_head.room');
 
 // Treasury page, accessible only to Treasury
 Route::get('/treasury', function () {

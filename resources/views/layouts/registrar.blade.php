@@ -10,19 +10,29 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        
 
         <!-- Scripts -->
+        <script src="//unpkg.com/alpinejs" defer></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @vite('resources/js/app.js')
+        @livewireStyles
+        
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen">
             @include('layouts.header')
             @include('registrar.sidenav')
             <!-- Page Content -->
-            <main class="w-full bg-gray-100 lg:ps-72">
-                {{ $slot }}
+            <main class="w-full bg-gray-100 flex flex-col lg:ps-[17rem] px-4 py-8 min-h-[calc(100vh-59px)]">
+   
+                    {{ $slot }}
+
+                
             </main>
         </div>
     </body>
+    @livewireScripts
+    
+
 </html>
