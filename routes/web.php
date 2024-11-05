@@ -25,13 +25,26 @@ Route::get('/registrar', function () {
   ->name('registrar');
 
 
+// Employee
 Route::get('/registrar/employee', function () {
   return view('registrar.employee.employee');
 })->middleware(['auth', CheckRole::class . ':registrar'])
   ->name('registrar.employee.registrar');
 
-
 Route::get('/registrar/employees/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+
+// Colleges
+Route::get('/registrar/colleges', function () {
+  return view('registrar.colleges.colleges');
+})->middleware(['auth', CheckRole::class . ':registrar'])
+  ->name('registrar.colleges');
+
+
+// Subjects
+Route::get('/registrar/subjects', function () {
+  return view('registrar.subjects.subjects');
+})->middleware(['auth', CheckRole::class . ':registrar'])
+  ->name('registrar.subjects');
 
 
 // Teacher page, accessible only to teachers
@@ -51,6 +64,11 @@ Route::get('/program_head', function () {
   return view('program_head.dashboard');
 })->middleware(['auth', CheckRole::class . ':program_head'])
   ->name('program_head');
+
+Route::get('/program_head/room', function () {
+  return view('program_head.room.room');
+})->middleware(['auth', CheckRole::class . ':program_head'])
+  ->name('program_head.room');
 
 // Treasury page, accessible only to Treasury
 Route::get('/treasury', function () {
