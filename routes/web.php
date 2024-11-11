@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\CheckRole;
 use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,12 @@ Route::get('/program_head', function () {
 Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function () {
   Route::resource('/program_head/rooms', RoomController::class)->except(['show']);
 });
+
+// Schedule management routes for Program Head
+Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function () {
+  Route::resource('/program_head/schedules', ScheduleController::class)->except(['show']);
+});
+
 
 
 // Treasury page, accessible only to Treasury
