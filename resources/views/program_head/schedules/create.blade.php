@@ -16,18 +16,20 @@
         <form action="{{ route('schedules.store') }}" method="POST" class="p-6 space-y-4 bg-white border border-gray-200 rounded-lg shadow-md">
             @csrf
 
+            <!-- Subject Selection -->
             <div>
-                <label for="course_id" class="block mb-1 text-sm font-medium text-gray-700">Course:</label>
-                <select name="course_id" id="course_id" class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @foreach($courses as $course)
-                        <option value="{{ $course->id }}" {{ old('course_id') == $course->id ? 'selected' : '' }}>{{ $course->name }}</option>
+                <label for="subject_id" class="block mb-1 text-sm font-medium text-gray-700">Subject:</label>
+                <select name="subject_id" id="subject_id" class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    @foreach($subjects as $subject)
+                        <option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
                     @endforeach
                 </select>
-                @error('course_id')
+                @error('subject_id')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
+            <!-- Teacher Selection -->
             <div>
                 <label for="employee_id" class="block mb-1 text-sm font-medium text-gray-700">Professor:</label>
                 <select name="employee_id" id="employee_id" class="block w-full p-2 border border-gray-300 rounded-lg choices-select focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -40,6 +42,7 @@
                 @enderror
             </div>
 
+            <!-- Room Selection -->
             <div>
                 <label for="room_id" class="block mb-1 text-sm font-medium text-gray-700">Room:</label>
                 <select name="room_id" id="room_id" class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -52,6 +55,7 @@
                 @enderror
             </div>
 
+            <!-- Day of the Week Selection -->
             <div>
                 <label for="day_of_week" class="block mb-1 text-sm font-medium text-gray-700">Day:</label>
                 <select name="day_of_week" id="day_of_week" class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -68,6 +72,7 @@
                 @enderror
             </div>
 
+            <!-- Start Time -->
             <div>
                 <label for="start_time" class="block mb-1 text-sm font-medium text-gray-700">Start Time:</label>
                 <input type="time" name="start_time" id="start_time" value="{{ old('start_time') }}" class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -76,6 +81,7 @@
                 @enderror
             </div>
 
+            <!-- End Time -->
             <div>
                 <label for="end_time" class="block mb-1 text-sm font-medium text-gray-700">End Time:</label>
                 <input type="time" name="end_time" id="end_time" value="{{ old('end_time') }}" class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>

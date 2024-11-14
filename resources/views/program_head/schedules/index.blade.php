@@ -11,7 +11,7 @@
             <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
                 <thead>
                     <tr class="">
-                        <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Course</th>
+                        <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Subject</th>
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Teacher</th>
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Room</th>
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Day</th>
@@ -23,7 +23,7 @@
                 <tbody>
                     @foreach($schedules as $schedule)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->course->name }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->subject->name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->teacher->user->name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->room->name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->day_of_week }}</td>
