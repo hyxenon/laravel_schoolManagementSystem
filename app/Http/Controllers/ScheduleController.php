@@ -44,7 +44,7 @@ class ScheduleController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request data
+
         $request->validate([
             'course_id' => 'required|exists:courses,id',
             'room_id' => 'required|exists:rooms,id',
@@ -68,13 +68,15 @@ class ScheduleController extends Controller
                             ->where('end_time', '>', $request->end_time);
                     });
             })
+            ->where('start_time', '!=', $request->end_time)
+            ->where('end_time', '!=', $request->start_time)
             ->exists();
 
         if ($conflict) {
             return redirect()->back()->withErrors(['conflict' => 'The schedule conflicts with an existing schedule.'])->withInput();
         }
 
-        // Create a new schedule if no conflict exists
+
         Schedule::create($request->all());
 
         return redirect()->route('schedules.index')->with('success', 'Schedule created successfully.');
@@ -118,6 +120,8 @@ class ScheduleController extends Controller
                             ->where('end_time', '>', $request->end_time);
                     });
             })
+            ->where('start_time', '!=', $request->end_time) // Allow exact end-to-start
+            ->where('end_time', '!=', $request->start_time) // Allow exact start-to-end
             ->exists();
 
         if ($conflict) {
@@ -130,12 +134,6 @@ class ScheduleController extends Controller
 
         return redirect()->route('schedules.index')->with('success', 'Schedule updated successfully.');
     }
-
-
-
-
-
-
 
     public function destroy($id)
     {
