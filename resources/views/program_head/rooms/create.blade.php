@@ -14,13 +14,23 @@
                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <!-- Building select dropdown -->
                     <div class="mb-4">
-                        <label for="building" class="block mb-2 text-sm font-bold text-gray-700">Building</label>
-                        <input type="text" name="building" id="building" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('building') border-red-500 @enderror" value="{{ old('building') }}" required>
-                        @error('building')
+                        <label for="building_id" class="block mb-2 text-sm font-bold text-gray-700">Building</label>
+                        <select name="building_id" id="building_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('building_id') border-red-500 @enderror" required>
+                            <option value="" disabled selected>Select Building</option>
+                            @foreach($buildings as $building)
+                                <option value="{{ $building->id }}" {{ old('building_id') == $building->id ? 'selected' : '' }}>
+                                    {{ $building->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('building_id')
                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+
                     <div class="mb-4">
                         <label for="capacity" class="block mb-2 text-sm font-bold text-gray-700">Capacity</label>
                         <input type="number" name="capacity" id="capacity" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('capacity') border-red-500 @enderror" value="{{ old('capacity') }}" required min="1">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
@@ -47,6 +48,15 @@ Route::get('/registrar/subjects', function () {
   return view('registrar.subjects.subjects');
 })->middleware(['auth', CheckRole::class . ':registrar'])
   ->name('registrar.subjects');
+
+
+// Building Management for registrar
+Route::middleware(['auth', CheckRole::class . ':registrar'])->group(function () {
+  Route::resource('/registrar/buildings', BuildingController::class);
+});
+
+
+
 
 
 // Teacher page, accessible only to teachers
