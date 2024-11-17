@@ -3,6 +3,7 @@
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\CheckRole;
@@ -94,5 +95,20 @@ Route::get('/treasury', function () {
   return view('treasury.dashboard');
 })->middleware(['auth', CheckRole::class . ':treasury'])
   ->name('treasury');
+
+
+//Grade Calculator routes 
+
+Route::get('/teacher/grades', [GradeController::class, 'showSubject'])
+->middleware(['auth', CheckRole::class . ':teacher'])
+->name('grades.subject');
+
+Route::get('/teacher/grades/{subjectId}', [GradeController::class, 'showStudents'])
+  ->middleware(['auth', CheckRole::class . ':teacher'])
+  ->name('grades.student');
+
+Route::get('/teacher/grades/{subjectId}/{studentId}', [GradeController::class, 'showStudentGrades'])
+  ->middleware(['auth', CheckRole::class . ':teacher'])
+  ->name('grades.grade');
 
 require __DIR__ . '/auth.php';
