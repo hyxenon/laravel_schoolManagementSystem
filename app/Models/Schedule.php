@@ -52,9 +52,4 @@ class Schedule extends Model
     {
         return $this->belongsToMany(Student::class, 'schedule_student');
     }
-
-    public function subject()
-{
-    return $this->belongsTo(Subject::class, 'subject_id');
-}
 }

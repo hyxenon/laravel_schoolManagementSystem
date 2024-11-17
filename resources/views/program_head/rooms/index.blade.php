@@ -200,6 +200,11 @@
         document.getElementById('addRoomModal').classList.remove('hidden');
     }
 
+    function closeAddRoomModal() {
+    document.getElementById('addRoomModal').classList.add('hidden');
+}
+
+
     function openEditRoomModal(room) {
     document.getElementById('edit_name').value = room.name;
     document.getElementById('edit_building_id').value = room.building_id;
