@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->foreignId('student_id')->constrained()->onDelete('cascade'); // Foreign key to Student table
+            $table->string('student_id'); // Use string for student ID
             $table->decimal('amount', 10, 2); // Amount paid
             $table->date('payment_date'); // Date of the payment
-            $table->string('payment_type'); // Type of payment (e.g., "tuition", "library fee")
-            $table->string('status'); // Payment status (e.g., "paid", "pending")
+            $table->string('document_type'); // Type of payment (e.g., "tuition", "library fee")
+            $table->string('payment_method'); // Type of payment (e.g., "otc",)
+            $table->string('exam_type')->nullable(); // 
+            $table->string('status')->default('pending'); // set a default value
             $table->text('remarks')->nullable(); // Additional remarks (optional)
             $table->timestamps(); // created_at and updated_at
         });

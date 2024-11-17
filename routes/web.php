@@ -3,6 +3,7 @@
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ScheduleController;
@@ -97,6 +98,12 @@ Route::get('/treasury', function () {
   ->name('treasury');
 
 
+Route::get('treasury/payment', [PaymentController::class, 'showPaymentForm'])->name('treasury.payment.create');
+Route::post('treasury/payment/store', [PaymentController::class, 'store'])->name('treasury.payment.store');
+Route::get('treasury/payment/receipt/{id}', [PaymentController::class, 'showReceipt'])->name('treasury.payment.receipt');
+Route::post('/get-student-name', [PaymentController::class, 'getStudentName'])->name('get.student.name');
+
+
 //Grade Calculator routes 
 
 Route::get('/teacher/grades', [GradeController::class, 'showSubject'])
@@ -110,5 +117,6 @@ Route::get('/teacher/grades/{subjectId}', [GradeController::class, 'showStudents
 Route::get('/teacher/grades/{subjectId}/{studentId}', [GradeController::class, 'showStudentGrades'])
   ->middleware(['auth', CheckRole::class . ':teacher'])
   ->name('grades.grade');
+
 
 require __DIR__ . '/auth.php';
