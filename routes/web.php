@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\CheckRole;
 use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +52,15 @@ Route::get('/registrar/subjects', function () {
   ->name('registrar.subjects');
 
 
+// Building Management for registrar
+Route::middleware(['auth', CheckRole::class . ':registrar'])->group(function () {
+  Route::resource('/registrar/buildings', BuildingController::class);
+});
+
+
+
+
+
 // Teacher page, accessible only to teachers
 Route::get('/teacher', function () {
   return view('professor.dashboard');
@@ -66,10 +79,17 @@ Route::get('/program_head', function () {
 })->middleware(['auth', CheckRole::class . ':program_head'])
   ->name('program_head');
 
-Route::get('/program_head/room', function () {
-  return view('program_head.room.room');
-})->middleware(['auth', CheckRole::class . ':program_head'])
-  ->name('program_head.room');
+// Room management routes for Program Head
+Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function () {
+  Route::resource('/program_head/rooms', RoomController::class)->except(['show']);
+});
+
+// Schedule management routes for Program Head
+Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function () {
+  Route::resource('/program_head/schedules', ScheduleController::class)->except(['show']);
+});
+
+
 
 // Treasury page, accessible only to Treasury
 Route::get('/treasury', function () {
@@ -77,9 +97,26 @@ Route::get('/treasury', function () {
 })->middleware(['auth', CheckRole::class . ':treasury'])
   ->name('treasury');
 
+
 Route::get('treasury/payment', [PaymentController::class, 'showPaymentForm'])->name('treasury.payment.create');
 Route::post('treasury/payment/store', [PaymentController::class, 'store'])->name('treasury.payment.store');
 Route::get('treasury/payment/receipt/{id}', [PaymentController::class, 'showReceipt'])->name('treasury.payment.receipt');
 Route::post('/get-student-name', [PaymentController::class, 'getStudentName'])->name('get.student.name');
+
+
+//Grade Calculator routes 
+
+Route::get('/teacher/grades', [GradeController::class, 'showSubject'])
+->middleware(['auth', CheckRole::class . ':teacher'])
+->name('grades.subject');
+
+Route::get('/teacher/grades/{subjectId}', [GradeController::class, 'showStudents'])
+  ->middleware(['auth', CheckRole::class . ':teacher'])
+  ->name('grades.student');
+
+Route::get('/teacher/grades/{subjectId}/{studentId}', [GradeController::class, 'showStudentGrades'])
+  ->middleware(['auth', CheckRole::class . ':teacher'])
+  ->name('grades.grade');
+
 
 require __DIR__ . '/auth.php';
