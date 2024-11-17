@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\CheckRole;
 use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +51,15 @@ Route::get('/registrar/subjects', function () {
   ->name('registrar.subjects');
 
 
+// Building Management for registrar
+Route::middleware(['auth', CheckRole::class . ':registrar'])->group(function () {
+  Route::resource('/registrar/buildings', BuildingController::class);
+});
+
+
+
+
+
 // Teacher page, accessible only to teachers
 Route::get('/teacher', function () {
   return view('professor.dashboard');
@@ -65,6 +77,18 @@ Route::get('/program_head', function () {
   return view('program_head.dashboard');
 })->middleware(['auth', CheckRole::class . ':program_head'])
   ->name('program_head');
+
+// Room management routes for Program Head
+Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function () {
+  Route::resource('/program_head/rooms', RoomController::class)->except(['show']);
+});
+
+// Schedule management routes for Program Head
+Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function () {
+  Route::resource('/program_head/schedules', ScheduleController::class)->except(['show']);
+});
+
+
 
 // Treasury page, accessible only to Treasury
 Route::get('/treasury', function () {

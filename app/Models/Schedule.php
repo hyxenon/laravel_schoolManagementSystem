@@ -22,11 +22,11 @@ class Schedule extends Model
     // Relationships
 
     /**
-     * Get the course that this schedule belongs to.
+     * Get the subject that this schedule belongs to.
      */
-    public function course()
+    public function subject()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Subject::class);
     }
 
     /**

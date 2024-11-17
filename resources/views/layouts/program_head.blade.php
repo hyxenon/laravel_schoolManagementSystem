@@ -10,6 +10,12 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <!-- Include Choices.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+
+<!-- Include Choices.js JS -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -20,7 +26,7 @@
             @include('layouts.header')
             @include('program_head.sidenav')
             <!-- Page Content -->
-            <main class="w-full bg-gray-100 lg:ps-72">
+            <main class="w-full bg-gray-100 flex flex-col lg:ps-[17rem] px-4 py-8 min-h-[calc(100vh-59px)]">
                 {{ $slot }}
             </main>
         </div>
