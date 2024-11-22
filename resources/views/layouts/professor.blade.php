@@ -20,7 +20,7 @@
             @include('layouts.header')
             @include('professor.sidenav')
             <!-- Page Content -->
-            <main class="w-full bg-gray-100 lg:ps-72">
+            <main class="w-full bg-gray-100 flex flex-col lg:ps-[17rem] px-4 py-8 min-h-[calc(100vh-59px)]">
                 {{ $slot }}
             </main>
         </div>

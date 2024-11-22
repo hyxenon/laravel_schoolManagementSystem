@@ -1,23 +1,15 @@
 <x-treasury-layout>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Receipt</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
-    <div class="max-w-md mx-auto my-10 p-5 bg-white shadow-md rounded-lg">
-        <div class="text-center mb-6">
+
+    <div class="max-w-md p-5 mx-auto my-10 bg-white rounded-lg shadow-md">
+        <div class="mb-6 text-center">
             <img src="{{ asset('images/schoolLogo.svg')}}" alt="Logo" class="w-16 mx-auto mb-2">
             <h1 class="text-xl font-bold text-gray-800">International State College of the Philippines</h1>
-            <p class="text-gray-600 text-sm">{{ date('D, M d, Y • h:i:s A', strtotime($payment->payment_date)) }}</p>
+            <p class="text-sm text-gray-600">{{ date('D, M d, Y • h:i:s A', strtotime($payment->payment_date)) }}</p>
         </div>
 
-        <div class="text-center mb-6">
+        <div class="mb-6 text-center">
             <p class="text-sm font-semibold">Token</p>
-            <div class="border border-dashed border-gray-800 p-2 rounded-lg font-bold">{{ $payment->token }}</div>
+            <div class="p-2 font-bold border border-gray-800 border-dashed rounded-lg">{{ $payment->token }}</div>
         </div>
 
         <hr class="my-4 border-gray-300">
@@ -60,11 +52,10 @@
         </div>
 
 
-        <div class="text-center mt-6">
-            <button class="bg-blue-800 text-white rounded py-2 px-4 hover:bg-blue-700">Print Receipt</button>
+        <div class="mt-6 text-center">
+            <button class="px-4 py-2 text-white bg-blue-800 rounded hover:bg-blue-700">Print Receipt</button>
         </div>
     </div>
-</body>
-</html>
+
 </x-treasury-layout> 
 
