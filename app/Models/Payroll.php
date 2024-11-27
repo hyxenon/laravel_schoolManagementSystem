@@ -17,6 +17,9 @@ class Payroll extends Model
         'status',
         'remarks',
     ];
+    protected $casts = [
+        'payment_date' => 'datetime',  // This will automatically convert payment_date to a Carbon instance
+    ];
 
     // Relationships
 

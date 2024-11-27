@@ -11,6 +11,17 @@ use App\Http\Middleware\CheckRole;
 use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
 
+//Payroll Controller
+use App\Http\Controllers\PayrollController;
+
+Route::resource('payroll', PayrollController::class);
+Route::resource('payroll', PayrollController::class)->middleware('auth');
+Route::get('payroll/create', [PayrollController::class, 'create'])->name('payroll.create');
+Route::post('payroll', [PayrollController::class, 'store'])->name('payroll.store');
+Route::get('payroll/{payroll}/edit', [PayrollController::class, 'edit'])->name('payroll.edit');
+Route::put('payroll/{payroll}', [PayrollController::class, 'update'])->name('payroll.update');
+
+
 Route::redirect('/', 'login');
 
 Route::get('/dashboard', function () {
@@ -104,7 +115,7 @@ Route::get('treasury/payment/receipt/{id}', [PaymentController::class, 'showRece
 Route::post('/get-student-name', [PaymentController::class, 'getStudentName'])->name('get.student.name');
 
 
-//Grade Calculator routes 
+//Grade Calculator routes
 
 Route::get('/teacher/grades', [GradeController::class, 'showSubject'])
 ->middleware(['auth', CheckRole::class . ':teacher'])
