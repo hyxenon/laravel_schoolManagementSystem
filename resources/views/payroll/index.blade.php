@@ -8,7 +8,7 @@
         </div>
     @endif
 
-    <!-- Add New Payroll Button -->
+    <!-- Add Payroll Button -->
     <div class="mb-6">
         <a href="{{ route('payroll.create') }}" class="inline-block px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
             Add New Payroll

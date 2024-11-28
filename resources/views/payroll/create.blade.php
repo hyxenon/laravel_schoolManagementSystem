@@ -1,56 +1,54 @@
 <x-registrar-layout>
-    <!-- Page Title -->
-    <div class="mb-6">
-        <h1 class="text-3xl font-semibold text-gray-800">Create New Payroll</h1>
-    </div>
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6">Add New Payroll</h1>
 
-    <!-- Create Payroll Form -->
-    <div class="w-full max-w-full mx-auto bg-white p-8 rounded-lg shadow-md">
-        <form action="{{ route('payroll.store') }}" method="POST">
-            @csrf
+    <!-- Display Validation Errors -->
+    @if ($errors->any())
+        <div class="mb-6 text-red-600">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Employee Name -->
-                <div class="mb-4">
-                    <label for="employee_name" class="block text-sm font-medium text-gray-700">Employee</label>
-                    <input type="text" id="employee_name" name="employee_name" class="mt-1 px-4 py-2 border border-gray-300 rounded-md w-full" placeholder="Enter employee name" required>
-                </div>
+    <!-- Add Payroll Form -->
+    <form action="{{ route('payroll.store') }}" method="POST" class="space-y-4">
+        @csrf
 
-                <!-- Amount -->
-                <div class="mb-4">
-                    <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                    <input type="number" id="amount" name="amount" class="mt-1 px-4 py-2 border border-gray-300 rounded-md w-full" step="0.01" placeholder="Enter amount" required>
-                </div>
+        <div>
+            <label for="employee_id" class="block text-sm font-medium text-gray-700">Employee</label>
+            <select name="employee_id" id="employee_id" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                <option value="">Select Employee</option>
+                @foreach($employees as $employee)
+                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-                <!-- Payment Date -->
-                <div class="mb-4">
-                    <label for="payment_date" class="block text-sm font-medium text-gray-700">Payment Date</label>
-                    <input type="date" id="payment_date" name="payment_date" class="mt-1 px-4 py-2 border border-gray-300 rounded-md w-full" required>
-                </div>
+        <div>
+            <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+            <input type="number" name="amount" id="amount" value="{{ old('amount') }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+        </div>
 
-                <!-- Status -->
-                <div class="mb-4">
-                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                    <select id="status" name="status" class="mt-1 px-4 py-2 border border-gray-300 rounded-md w-full">
-                        <option value="paid">Paid</option>
-                        <option value="pending">Pending</option>
-                        <option value="overdue">Overdue</option>
-                    </select>
-                </div>
+        <div>
+            <label for="payment_date" class="block text-sm font-medium text-gray-700">Payment Date</label>
+            <input type="date" name="payment_date" id="payment_date" value="{{ old('payment_date') }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+        </div>
 
-                <!-- Remarks -->
-                <div class="mb-4 col-span-2">
-                    <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
-                    <textarea id="remarks" name="remarks" class="mt-1 px-4 py-2 border border-gray-300 rounded-md w-full" rows="4" placeholder="Enter any remarks"></textarea>
-                </div>
-            </div>
+        <div>
+            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+            <select name="status" id="status" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                <option value="paid" {{ old('status') == 'paid' ? 'selected' : '' }}>Paid</option>
+                <option value="unpaid" {{ old('status') == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
+            </select>
+        </div>
 
-            <!-- Submit Button -->
-            <div class="mt-6 text-right">
-                <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-200">
-                    Create Payroll
-                </button>
-            </div>
-        </form>
-    </div>
+        <div>
+            <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
+            <textarea name="remarks" id="remarks" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">{{ old('remarks') }}</textarea>
+        </div>
+
+        <button type="submit" class="w-full px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">Add Payroll</button>
+    </form>
 </x-registrar-layout>

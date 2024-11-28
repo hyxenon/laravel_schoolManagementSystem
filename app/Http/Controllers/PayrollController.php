@@ -8,47 +8,44 @@ use Illuminate\Http\Request;
 
 class PayrollController extends Controller
 {
-    public function index()
-{
-    // Fetch all payrolls
-    $payrolls = Payroll::all();  // Or use pagination if necessary
-
-    // Return the view with the payroll data
-    return view('payroll.index', compact('payrolls'));
-}
-
-    // Create a new payroll record
     public function create()
     {
-        $employees = Employee::all();  // Get all employees
+        // Pass employee data to the view to populate the employee select input
+        $employees = Employee::all();
         return view('payroll.create', compact('employees'));
     }
 
-    // Store payroll record
+    // Store the newly created payroll in the database
     public function store(Request $request)
-{
-    // Validate the form data
-    $request->validate([
-        'employee_id' => 'required|exists:employees,id',
-        'amount' => 'required|numeric',
-        'payment_date' => 'required|date',
-        'status' => 'required|string',
-        'remarks' => 'nullable|string',
-    ]);
+    {
+        // Validate the incoming data
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+            'amount' => 'required|numeric',
+            'payment_date' => 'required|date',
+            'status' => 'required|string',
+            'remarks' => 'nullable|string',
+        ]);
 
-    // Create a new payroll entry
-    $payroll = new Payroll();
-    $payroll->employee_id = $request->employee_id;
-    $payroll->amount = $request->amount;
-    $payroll->payment_date = $request->payment_date;
-    $payroll->status = $request->status;
-    $payroll->remarks = $request->remarks;
-    $payroll->save();
+        // Create a new payroll record
+        Payroll::create([
+            'employee_id' => $request->employee_id,
+            'amount' => $request->amount,
+            'payment_date' => $request->payment_date,
+            'status' => $request->status,
+            'remarks' => $request->remarks,
+        ]);
 
-    // Redirect back to the payroll list with a success message
-    return redirect()->route('payroll.index')->with('success', 'Payroll added successfully.');
-}
+        // Redirect to the payroll list with a success message
+        return redirect()->route('payroll.index')->with('success', 'Payroll added successfully.');
+    }
 
+    // Show the payroll list
+    public function index()
+    {
+        $payrolls = Payroll::all();
+        return view('payroll.index', compact('payrolls'));
+    }
     // Edit payroll record
     public function edit(Payroll $payroll)
     {

@@ -13,13 +13,20 @@ use Illuminate\Support\Facades\Route;
 
 //Payroll Controller
 use App\Http\Controllers\PayrollController;
-
 Route::resource('payroll', PayrollController::class);
 Route::resource('payroll', PayrollController::class)->middleware('auth');
-Route::get('payroll/create', [PayrollController::class, 'create'])->name('payroll.create');
-Route::post('payroll', [PayrollController::class, 'store'])->name('payroll.store');
-Route::get('payroll/{payroll}/edit', [PayrollController::class, 'edit'])->name('payroll.edit');
-Route::put('payroll/{payroll}', [PayrollController::class, 'update'])->name('payroll.update');
+// Display the list of payrolls
+Route::get('/payrolls', [PayrollController::class, 'index'])->name('payroll.index');
+// Show the form for adding a new payroll
+Route::get('/payrolls/create', [PayrollController::class, 'create'])->name('payroll.create');
+// Store the newly created payroll in the database
+Route::post('/payrolls', [PayrollController::class, 'store'])->name('payroll.store');
+// Edit the payroll
+Route::get('/payrolls/{payroll}/edit', [PayrollController::class, 'edit'])->name('payroll.edit');
+// Update the payroll data
+Route::put('/payrolls/{payroll}', [PayrollController::class, 'update'])->name('payroll.update');
+// Delete the payroll
+Route::delete('/payrolls/{payroll}', [PayrollController::class, 'destroy'])->name('payroll.destroy');
 
 
 Route::redirect('/', 'login');
