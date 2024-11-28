@@ -51,4 +51,8 @@ class Employee extends Model
     {
         return $this->hasMany(Department::class, 'head_of_department_id');
     }
+    public function payrolls()
+    {
+        return $this->hasMany(Payroll::class);
+    }
 }
