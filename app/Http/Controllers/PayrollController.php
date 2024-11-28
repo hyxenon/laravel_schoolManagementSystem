@@ -86,4 +86,12 @@ class PayrollController extends Controller
 
         return redirect()->route('payroll.index')->with('success', 'Payroll record deleted successfully.');
     }
+    public function show($id)
+    {
+        // Find payroll by ID
+        $payroll = Payroll::findOrFail($id);
+
+        // Return view with the payroll data
+        return view('payroll.show', compact('payroll'));
+    }
 }
