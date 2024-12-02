@@ -51,19 +51,4 @@
 
         <button type="submit" class="w-full px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">Add Payroll</button>
     </form>
-
-    <!-- Add Select2 JS and CSS for Employee Selection -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#employee_id').select2({
-                placeholder: 'Select an Employee',
-                allowClear: true,
-                width: '100%'
-            });
-        });
-    </script>
-
 </x-registrar-layout>

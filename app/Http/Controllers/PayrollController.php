@@ -43,7 +43,7 @@ class PayrollController extends Controller
     // Show the payroll list
     public function index()
     {
-        $payrolls = Payroll::with('employees')->get();
+        $payrolls = Payroll::all();
         return view('payroll.index', compact('payrolls'));
     }
     // Edit payroll record
