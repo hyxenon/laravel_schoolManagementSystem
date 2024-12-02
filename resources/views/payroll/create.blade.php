@@ -21,7 +21,9 @@
             <select name="employee_id" id="employee_id" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                 <option value="">Select Employee</option>
                 @foreach($employees as $employee)
-                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                    <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                        {{ $employee->user->name }} <!-- Access employee's user name -->
+                    </option>
                 @endforeach
             </select>
         </div>

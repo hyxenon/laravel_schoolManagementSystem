@@ -28,10 +28,8 @@ Route::put('/payrolls/{payroll}', [PayrollController::class, 'update'])->name('p
 // Delete the payroll
 Route::delete('/payrolls/{payroll}', [PayrollController::class, 'destroy'])->name('payroll.destroy');
 Route::get('/payroll/{id}', [PayrollController::class, 'show']);
-Route::resource('payroll', PayrollController::class); // This will automatically generate routes for all CRUD actions
 // Alternatively, if you are manually defining the routes:
 Route::get('/payroll/{id}', [PayrollController::class, 'show'])->name('payroll.show');
-
 
 Route::redirect('/', 'login');
 

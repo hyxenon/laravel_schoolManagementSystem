@@ -11,7 +11,7 @@ class PayrollSeeder extends Seeder
     public function run()
     {
         Payroll::create([
-            'employee_id' => 1,  // Assuming you have an employee with ID 1
+            'user_id' => 1,  // Assuming you have an employee with ID 1
             'amount' => 1000.50,
             'payment_date' => Carbon::now(),
             'status' => 'Paid',
@@ -19,7 +19,7 @@ class PayrollSeeder extends Seeder
         ]);
 
         Payroll::create([
-            'employee_id' => 2,  // Assuming you have an employee with ID 2
+            'user_id' => 2,  // Assuming you have an employee with ID 2
             'amount' => 1200.75,
             'payment_date' => Carbon::now(),
             'status' => 'Pending',

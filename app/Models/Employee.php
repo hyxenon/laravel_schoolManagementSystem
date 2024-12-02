@@ -51,4 +51,9 @@ class Employee extends Model
     {
         return $this->hasMany(Department::class, 'head_of_department_id');
     }
+        // If Payroll is related to Employee, define the inverse relationship
+    public function payrolls()
+    {
+        return $this->hasMany(Payroll::class);
+    }
 }

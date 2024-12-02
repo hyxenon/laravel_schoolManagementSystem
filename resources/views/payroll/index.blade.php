@@ -11,7 +11,7 @@
     <!-- Add Payroll Button -->
     <div class="mb-6">
         <a href="{{ route('payroll.create') }}" class="inline-block px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
-            Add New Payroll
+            Create Payroll
         </a>
     </div>
 
@@ -31,7 +31,7 @@
             <tbody>
                 @foreach ($payrolls as $payroll)
                     <tr class="border-b hover:bg-gray-100">
-                        <td class="px-4 py-2">{{ $payroll->employee->name }}</td>
+                        <td class="px-4 py-2">{{ $payroll->employee->user->name }}</td> <!-- Display employee name -->
                         <td class="px-4 py-2">{{ number_format($payroll->amount, 2) }}</td>
                         <td class="px-4 py-2">{{ $payroll->payment_date->format('Y-m-d') }}</td>
                         <td class="px-4 py-2 capitalize">{{ $payroll->status }}</td>

@@ -10,24 +10,24 @@ class PayrollController extends Controller
 {
     public function create()
     {
-        // Pass employee data to the view to populate the employee select input
-        $employees = Employee::all();
+        // Eager load the 'user' relationship to get the employee names
+        $employees = Employee::with('user')->get();
+
+        // Pass the employees to the view
         return view('payroll.create', compact('employees'));
     }
-
-    // Store the newly created payroll in the database
     public function store(Request $request)
     {
-        // Validate the incoming data
+        // Validate the incoming request data
         $request->validate([
-            'employee_id' => 'required|exists:employees,id',
+            'employee_id' => 'required|exists:employees,id',  // Ensure the employee exists
             'amount' => 'required|numeric',
             'payment_date' => 'required|date',
             'status' => 'required|string',
             'remarks' => 'nullable|string',
         ]);
 
-        // Create a new payroll record
+        // Create the new Payroll record
         Payroll::create([
             'employee_id' => $request->employee_id,
             'amount' => $request->amount,
@@ -36,14 +36,14 @@ class PayrollController extends Controller
             'remarks' => $request->remarks,
         ]);
 
-        // Redirect to the payroll list with a success message
-        return redirect()->route('payroll.index')->with('success', 'Payroll added successfully.');
+        // Redirect with success message
+        return redirect()->route('payroll.index')->with('success', 'Payroll added successfully!');
     }
-
-    // Show the payroll list
     public function index()
     {
-        $payrolls = Payroll::all();
+        // Fetch payrolls and their associated employees
+        $payrolls = Payroll::with('employee.user')->get();  // Eager load the employee's user
+
         return view('payroll.index', compact('payrolls'));
     }
     // Edit payroll record
