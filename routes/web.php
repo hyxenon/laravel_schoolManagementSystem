@@ -7,6 +7,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\dtrController;
+use App\Http\Controllers\EventController;
 use App\Http\Middleware\CheckRole;
 use App\Livewire\EmployeeView;
 use Illuminate\Support\Facades\Route;
@@ -78,7 +80,16 @@ Route::middleware(['auth', CheckRole::class . ':registrar'])->group(function () 
 });
 
 
-
+// events
+Route::get('/events/{event}', [EventController::class, 'show']);
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::post('/events', [EventController::class, 'store'])->name('events.store');
+Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+//dtr
+Route::get('/dtr', [dtrController::class, 'index'])->name('dtr.index');
+Route::get('/dtr/{dtr}', [dtrController::class, 'show'])->name('dtr.show');
 
 
 // Teacher page, accessible only to teachers
