@@ -14,7 +14,8 @@
                 <!-- Employee Name (Read-Only for Editing) -->
                 <div class="mb-4">
                     <label for="employee_name" class="block text-sm font-medium text-gray-700">Employee</label>
-                    <input type="text" id="employee_name" name="employee_name" value="{{ $payroll->employee->name }}" class="mt-1 px-4 py-2 border border-gray-300 rounded-md w-full" readonly>
+                    <!-- Read-Only Input for Employee Name -->
+                    <input type="text" id="employee_name" name="employee_name" value="{{ optional($payroll->employee)->name }}" class="mt-1 px-4 py-2 border border-gray-300 rounded-md w-full" readonly>
                 </div>
 
                 <!-- Amount -->

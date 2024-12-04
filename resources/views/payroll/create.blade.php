@@ -17,15 +17,16 @@
         @csrf
 
         <div>
-            <label for="employee_id" class="block text-sm font-medium text-gray-700">Employee</label>
-            <select name="employee_id" id="employee_id" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                <option value="">Select Employee</option>
+            <label for="employee_search" class="block text-sm font-medium text-gray-700">Search Employee</label>
+            <!-- Searchable Dropdown -->
+            <input list="employee_list" id="employee_search" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Search by name">
+            <datalist id="employee_list">
                 @foreach($employees as $employee)
-                    <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
-                        {{ $employee->user->name }} <!-- Access employee's user name -->
-                    </option>
+                    <option value="{{ $employee->user->name }}" data-id="{{ $employee->id }}"></option>
                 @endforeach
-            </select>
+            </datalist>
+            <!-- Hidden Field to Submit Selected Employee -->
+            <input type="hidden" name="employee_id" id="employee_id" required>
         </div>
 
         <div>
@@ -54,3 +55,20 @@
         <button type="submit" class="w-full px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">Add Payroll</button>
     </form>
 </x-registrar-layout>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const employeeSearch = document.getElementById('employee_search');
+        const employeeIdField = document.getElementById('employee_id');
+        const employeeList = document.getElementById('employee_list').options;
+
+        employeeSearch.addEventListener('input', function () {
+            const searchValue = employeeSearch.value;
+            for (let option of employeeList) {
+                if (option.value === searchValue) {
+                    employeeIdField.value = option.getAttribute('data-id');
+                    break;
+                }
+            }
+        });
+    });
+</script>
