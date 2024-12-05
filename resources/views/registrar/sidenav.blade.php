@@ -107,7 +107,7 @@ dark:bg-neutral-800 dark:border-neutral-700" role="dialog" tabindex="-1" aria-la
             </svg>
             Buildings
           </a>
-          
+
 
           <li><a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-300" href="#">
             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -141,6 +141,17 @@ dark:bg-neutral-800 dark:border-neutral-700" role="dialog" tabindex="-1" aria-la
             Attendace
           </a></li>
 
+
+          <li>
+            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:bg-neutral-700 dark:text-white" href="{{ route('payroll.index') }}">
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12l8 6 8-6V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6z" />
+                </svg>
+                Payroll
+            </a>
+
+
+        </li>
       </ul>
     </nav>
   </div>
