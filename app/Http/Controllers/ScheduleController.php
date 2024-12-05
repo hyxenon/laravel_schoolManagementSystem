@@ -51,6 +51,8 @@ class ScheduleController extends Controller
             'day_of_week' => 'required|string',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
+            'block' => 'required|integer|max:255',
+            'year' => 'required|integer|min:1|max:6',
         ]);
 
 
@@ -108,6 +110,8 @@ class ScheduleController extends Controller
             'day_of_week' => 'required|string',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
+            'block' => 'required|integer|max:255',
+            'year' => 'required|integer|min:1|max:6',
         ]);
 
 

@@ -14,6 +14,8 @@
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Subject</th>
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Teacher</th>
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Room</th>
+                        <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Year</th>
+                        <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Block</th>
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Day</th>
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">Start Time</th>
                         <th class="px-4 py-3 text-sm font-medium text-left text-gray-700 border-b">End Time</th>
@@ -26,6 +28,8 @@
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->subject->name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->teacher->user->name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->room->name }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->year }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->block }}</td>
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->day_of_week }}</td>
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->start_time }}</td>
                             <td class="px-4 py-2 text-sm text-gray-800 border-b">{{ $schedule->end_time }}</td>

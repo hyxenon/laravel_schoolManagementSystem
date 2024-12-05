@@ -43,6 +43,30 @@
                 @enderror
             </div>
 
+            <!-- Year Input -->
+<div>
+    <label for="year" class="block mb-1 text-sm font-medium text-gray-700">Year:</label>
+    <input type="number" name="year" id="year" 
+           value="{{ old('year', $schedule->year) }}" 
+           class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+           min="1" required>
+    @error('year')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+<!-- Block Input -->
+<div>
+    <label for="block" class="block mb-1 text-sm font-medium text-gray-700">Block:</label>
+    <input type="text" name="block" id="block" 
+           value="{{ old('block', $schedule->block) }}" 
+           class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+           required>
+    @error('block')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
             <!-- Room Selection -->
             <div>
                 <label for="room_id" class="block mb-1 text-sm font-medium text-gray-700">Room:</label>

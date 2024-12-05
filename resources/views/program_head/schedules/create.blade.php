@@ -55,6 +55,27 @@
                 @enderror
             </div>
 
+            {{-- Year and Block input --}}
+
+                        <!-- Year Input -->
+                        <div>
+                            <label for="year" class="block mb-1 text-sm font-medium text-gray-700">Year:</label>
+                            <input type="number" name="year" id="year" value="{{ old('year') }}" min="1" max="4" class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            @error('year')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+            <div>
+                <label for="block" class="block mb-1 text-sm font-medium text-gray-700">Block:</label>
+                <input type="number" name="block" id="block" value="{{ old('block') }}" class="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                @error('block')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+        
+
+
             <!-- Day of the Week Selection -->
             <div>
                 <label for="day_of_week" class="block mb-1 text-sm font-medium text-gray-700">Day:</label>
