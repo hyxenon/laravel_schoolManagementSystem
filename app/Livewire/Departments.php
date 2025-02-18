@@ -10,12 +10,12 @@ use Livewire\Component;
 class Departments extends Component
 {
     public $departments;
-    public $departmentId, $departmentName, $departmentDescription, $programHeadId;
+    public $departmentId, $departmentName, $department_code, $programHeadId;
     public $showModal = false;
     public $isEdit = false;
 
     // Course fields
-    public $courseId, $courseName, $courseDescription, $showCourseModal = false, $isCourseEdit = false;
+    public $courseId, $courseName, $course_code, $showCourseModal = false, $isCourseEdit = false;
     public $showDeleteCourseModal = false;
     public $showDeleteDepartmentModal = false;
     public $departmentIdToDelete;
@@ -40,7 +40,7 @@ class Departments extends Component
     {
         $this->validate([
             'departmentName' => 'required',
-            'departmentDescription' => 'required',
+            'department_code' => 'required',
             'programHeadId' => 'nullable|integer|exists:employees,id',
         ], [
             'programHeadId.exists' => 'The Program Head ID does not exist in the employees database.'
@@ -48,7 +48,7 @@ class Departments extends Component
 
         Department::create([
             'name' => $this->departmentName,
-            'description' => $this->departmentDescription,
+            'department_code' => $this->department_code,
             'head_of_department_id' => $this->programHeadId,
         ]);
 
@@ -73,7 +73,7 @@ class Departments extends Component
         $department = Department::findOrFail($id);
         $this->departmentId = $department->id;
         $this->departmentName = $department->name;
-        $this->departmentDescription = $department->description;
+        $this->department_code = $department->department_code;
         $this->programHeadId = $department->head_of_department_id;
     }
 
@@ -81,7 +81,7 @@ class Departments extends Component
     {
         $this->validate([
             'departmentName' => 'required',
-            'departmentDescription' => 'required',
+            'department_code' => 'required',
             'programHeadId' => [
                 'nullable',
                 'integer',
@@ -104,7 +104,7 @@ class Departments extends Component
 
         $department->update([
             'name' => $this->departmentName,
-            'description' => $this->departmentDescription,
+            'department_code' => $this->department_code,
             'head_of_department_id' => $this->programHeadId,
         ]);
 
@@ -166,12 +166,12 @@ class Departments extends Component
     {
         $this->validate([
             'courseName' => 'required',
-            'courseDescription' => 'required',
+            'course_code' => 'required',
         ]);
 
         Course::create([
             'name' => $this->courseName,
-            'description' => $this->courseDescription,
+            'course_code' => $this->course_code,
             'department_id' => $this->departmentId,
         ]);
 
@@ -189,7 +189,7 @@ class Departments extends Component
         $course = Course::findOrFail($courseId);
         $this->courseId = $course->id;
         $this->courseName = $course->name;
-        $this->courseDescription = $course->description;
+        $this->course_code = $course->course_code;
         $this->departmentId = $course->department_id;
     }
 
@@ -197,13 +197,13 @@ class Departments extends Component
     {
         $this->validate([
             'courseName' => 'required',
-            'courseDescription' => 'required',
+            'course_code' => 'required',
         ]);
 
         $course = Course::findOrFail($this->courseId);
         $course->update([
             'name' => $this->courseName,
-            'description' => $this->courseDescription,
+            'course_code' => $this->course_code,
         ]);
 
         $this->resetCourseInputFields();
@@ -251,7 +251,7 @@ class Departments extends Component
     {
         $this->departmentId = null;
         $this->departmentName = '';
-        $this->departmentDescription = '';
+        $this->department_code = '';
         $this->programHeadId = null;
     }
 
@@ -259,7 +259,7 @@ class Departments extends Component
     {
         $this->courseId = null;
         $this->courseName = '';
-        $this->courseDescription = '';
+        $this->course_code = '';
         $this->departmentId = null;
     }
 }

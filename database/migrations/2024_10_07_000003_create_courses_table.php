@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id(); // Primary key
+            $table->string('course_code');
             $table->string('name'); // Name of the course
-            $table->text('description')->nullable(); // Description of the course (optional)
             $table->foreignId('department_id')->constrained()->onDelete('cascade'); // Foreign key to Department table
             $table->timestamps(); // created_at and updated_at
         });

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id(); // Primary key
+            $table->string('department_code');
             $table->string('name'); // Name of the department
-            $table->text('description')->nullable(); // Description of the department (optional)
             $table->foreignId('head_of_department_id')->nullable()->constrained('employees')->nullOnDelete(); // Foreign key to Employee table for head of the department
             $table->timestamps(); // created_at and updated_at
         });

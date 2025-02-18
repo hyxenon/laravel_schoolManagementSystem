@@ -11,9 +11,10 @@ class Course extends Model
 
     // Define the fillable fields for mass assignment
     protected $fillable = [
+        'course_code',
         'name',
-        'department_id',
         'description',
+        'department_id'
     ];
 
     // Relationships

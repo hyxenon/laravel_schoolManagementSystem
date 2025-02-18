@@ -18,16 +18,18 @@ class InitialUserSeeder extends Seeder
     {
         // Create Department for College of Engineering
         $engineeringDepartment = Department::create([
+            'department_code' => 'CECT',
             'name' => 'College of Engineering and Computer Technology',
-            'description' => 'College of Engineering and Computer Technology',
         ]);
 
         // Create Course for BSIT within CECT
         $bsitCourse = Course::create([
-            'name' => 'BSIT',
-            'description' => 'Bachelor of Science in Information Technology',
+            'course_code' => 'BSIT',
+            'name' => 'Bachelor of Science in Information Technology',
             'department_id' => $engineeringDepartment->id,
         ]);
+
+        $this->call(DepartmentSeeder::class);
 
         // Create a User (Student role)
         $user = User::create([
