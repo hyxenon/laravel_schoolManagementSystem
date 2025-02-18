@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 //Payroll Controller
 use App\Http\Controllers\PayrollController;
+
 Route::resource('payroll', PayrollController::class);
 Route::resource('payroll', PayrollController::class)->middleware('auth');
 // Display the list of payrolls
@@ -44,12 +45,6 @@ Route::middleware('auth')->group(function () {
 });
 
 // Registrar page, accessible only to registrars
-Route::get('/registrar', function () {
-  return view('registrar.dashboard');
-})->middleware(['auth', CheckRole::class . ':registrar'])
-  ->name('registrar');
-
-
 // Employee
 Route::get('/registrar/employee', function () {
   return view('registrar.employee.employee');
@@ -82,22 +77,13 @@ Route::middleware(['auth', CheckRole::class . ':registrar'])->group(function () 
 
 
 // Teacher page, accessible only to teachers
-Route::get('/teacher', function () {
-  return view('professor.dashboard');
-})->middleware(['auth', CheckRole::class . ':teacher'])
-  ->name('teacher');
+
+
 
 // Student page, accessible only to students
-Route::get('/student', function () {
-  return view('student.dashboard');
-})->middleware(['auth', CheckRole::class . ':student'])
-  ->name('student');
+
 
 // Program Head page, accessible only to Program Head
-Route::get('/program_head', function () {
-  return view('program_head.dashboard');
-})->middleware(['auth', CheckRole::class . ':program_head'])
-  ->name('program_head');
 
 // Room management routes for Program Head
 Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function () {
@@ -112,10 +98,6 @@ Route::middleware(['auth', CheckRole::class . ':program_head'])->group(function 
 
 
 // Treasury page, accessible only to Treasury
-Route::get('/treasury', function () {
-  return view('treasury.dashboard');
-})->middleware(['auth', CheckRole::class . ':treasury'])
-  ->name('treasury');
 
 
 Route::get('treasury/payment', [PaymentController::class, 'showPaymentForm'])->name('treasury.payment.create');
@@ -127,8 +109,8 @@ Route::post('/get-student-name', [PaymentController::class, 'getStudentName'])->
 //Grade Calculator routes
 
 Route::get('/teacher/grades', [GradeController::class, 'showSubject'])
-->middleware(['auth', CheckRole::class . ':teacher'])
-->name('grades.subject');
+  ->middleware(['auth', CheckRole::class . ':teacher'])
+  ->name('grades.subject');
 
 Route::get('/teacher/grades/{subjectId}', [GradeController::class, 'showStudents'])
   ->middleware(['auth', CheckRole::class . ':teacher'])

@@ -17,6 +17,6 @@ export default {
             },
         },
     },
-
+    darkMode: "class",
     plugins: [forms, require("preline/plugin")],
 };
